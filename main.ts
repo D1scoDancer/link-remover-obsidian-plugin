@@ -13,8 +13,11 @@ export default class CleanSelectedLinksPlugin extends Plugin {
 					return;
 				}
 
-				// Удаляем ссылки вида: пробел (опционально) + [текст](url)
-				const cleaned = selection.replace(/ ?\[[^\]]*?\]\([^\)]*?\)/g, '');
+				// Разбиваем выделение на строки и очищаем каждую отдельно
+				const cleaned = selection
+					.split('\n')
+					.map(line => line.replace(/ ?\[[^\]]*?\]\([^\)]*?\)/g, ''))
+					.join('\n');
 
 				editor.replaceSelection(cleaned);
 			}
